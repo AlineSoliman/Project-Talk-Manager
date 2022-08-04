@@ -1,6 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const crypto = require('crypto');
 const talkers = require('./speaker.js');
+
+const emailRegex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i;
 
 const app = express();
 app.use(bodyParser.json());
@@ -30,6 +33,20 @@ app.get('/talker/:id', async (request, response) => {
   }
   } catch (error) {
     response.status(500).json(error);
+  }
+});
+
+app.post('/login', (request, response) => {
+  try {
+    const { email, password } = request.body;
+    if ([email, password].includes(undefined)) {
+      return response.status(401).json({ message: 'missing fields' });
+    }
+    const token = crypto.randomBytes(8).toString('hex');
+
+    return response.status(200).json({ token });
+  } catch (error) {
+    return response.status(500).end();
   }
 });
 
