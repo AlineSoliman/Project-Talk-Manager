@@ -3,8 +3,6 @@ const bodyParser = require('body-parser');
 const crypto = require('crypto');
 const talkers = require('./speaker.js');
 
-const emailRegex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i;
-
 const app = express();
 app.use(bodyParser.json());
 
