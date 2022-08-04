@@ -66,6 +66,22 @@ validateRate, async (request, response) => {
   return response.status(201).json(newSpeaker);
 });
 
+app.put('/talker/:id', 
+validateToken,
+validateName,
+validateAge,
+validateTalk,
+validateWatchedAt,
+validateRate, async (request, response) => {
+  const speakerList = await talkers();
+  const { id } = request.params;
+  const { name, age, talk } = request.body;
+  const talkerIndex = speakerList.findIndex((r) => r.id === Number(id));
+  speakerList[talkerIndex] = { ...speakerList[talkerIndex], name, age, talk };
+  await fs.writeFile('./talker.json', JSON.stringify(speakerList));
+  return response.status(200).json(speakerList[talkerIndex]);
+});
+
 app.listen(PORT, () => {
   console.log('Online');
 }); 
