@@ -23,6 +23,13 @@ app.get('/', (_request, response) => {
   response.status(HTTP_OK_STATUS).send();
 });
 
+app.get('/talker/search', validateToken, async (request, response) => {
+  const research = await talkers();
+  const { q } = request.query;
+  const search = research.filter((r) => r.name.includes(q));
+  return response.status(200).json(search);
+});
+
 app.get('/talker', async (_request, response) => {
   const orator = await talkers();
   response.status(HTTP_OK_STATUS).send(orator);
@@ -88,7 +95,6 @@ validateToken,
   const speakerList = await talkers();
   const { id } = request.params;
   const talkerIndex = speakerList.filter((r) => r.id !== +id);
-  console.log(talkerIndex);
   await fs.writeFile('./talker.json', JSON.stringify(talkerIndex));
   return response.status(204).end();
 });
