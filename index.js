@@ -82,6 +82,17 @@ validateRate, async (request, response) => {
   return response.status(200).json(speakerList[talkerIndex]);
 });
 
+app.delete('/talker/:id', 
+validateToken,
+  async (request, response) => {
+  const speakerList = await talkers();
+  const { id } = request.params;
+  const talkerIndex = speakerList.filter((r) => r.id !== +id);
+  console.log(talkerIndex);
+  await fs.writeFile('./talker.json', JSON.stringify(talkerIndex));
+  return response.status(204).end();
+});
+
 app.listen(PORT, () => {
   console.log('Online');
 }); 
