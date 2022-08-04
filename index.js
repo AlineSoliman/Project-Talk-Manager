@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const talkers = require('./speaker.js');
 const validaEmail = require('./middlewares/validateEmail.js');
 const validaPassword = require('./middlewares/validatePassword.js');
-const validaToken = require('./middlewares/validateToken.js');
+const validToken = require('./middlewares/token.js');
 
 const app = express();
 app.use(bodyParser.json());
@@ -37,7 +37,7 @@ app.get('/talker/:id', async (request, response) => {
 });
 
 app.post('/login', validaEmail, validaPassword, (request, response) => {
-  const token = validaToken();
+  const token = validToken();
   response.status(200).json({ token });
 });
 
