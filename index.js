@@ -1,9 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const talkers = require('./speaker.js');
-const validaEmail = require('./middlewares/validaEmail.js');
-const validaPassword = require('./middlewares/validaPassword.js');
-const validaToken = require('./middlewares/validaToken.js');
+const validaEmail = require('./middlewares/validateEmail.js');
+const validaPassword = require('./middlewares/validatePassword.js');
+const validaToken = require('./middlewares/validateToken.js');
 
 const app = express();
 app.use(bodyParser.json());
